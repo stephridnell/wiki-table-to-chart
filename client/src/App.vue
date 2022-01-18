@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <input v-model="url">
     <button @click="getTable">
       click me
     </button>
@@ -13,9 +14,14 @@
 import axios from 'axios'
 export default {
   name: 'App',
+  data () {
+    return {
+      url: 'https://en.wikipedia.org/wiki/Women%27s_high_jump_world_record_progression'
+    }
+  },
   methods: {
     getTable () {
-      axios(`${process.env.VUE_APP_SERVER_ENDPOINT}/table`);
+      axios(`${process.env.VUE_APP_SERVER_ENDPOINT}/table?url=${this.url}`);
     }
   }
 }
