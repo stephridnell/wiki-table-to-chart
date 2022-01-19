@@ -1,9 +1,21 @@
 <template>
   <div id="app">
-    <input v-model="url">
-    <button @click="getTable">
-      click me
+    <div style="margin-bottom:12px;">
+      <input v-model="url">
+    </div>
+    <button style="margin-bottom:24px;" @click="getTable">
+      GO
     </button>
+    <template v-if="!loading">
+      <div class="card" v-for="(table, index) in tables" :key="index">
+        <chart
+          :data="table">
+        </chart>
+      </div>
+    </template>
+    <div class="card" v-else>
+      Loading...
+    </div>
   </div>
 </template>
 
@@ -16,12 +28,20 @@ export default {
   name: 'App',
   data () {
     return {
-      url: 'https://en.wikipedia.org/wiki/Women%27s_high_jump_world_record_progression'
+      url: 'https://en.wikipedia.org/wiki/Women%27s_high_jump_world_record_progression',
+      tables: [],
+      loading: false
     }
   },
+  components: {
+    Chart: () => import('@/components/Chart.vue')
+  },
   methods: {
-    getTable () {
-      axios(`${process.env.VUE_APP_SERVER_ENDPOINT}/table?url=${this.url}`);
+    async getTable () {
+      this.loading = true
+      let resp = await axios(`${process.env.VUE_APP_SERVER_ENDPOINT}/table?url=${this.url}`)
+      this.tables = resp.data
+      this.loading = false
     }
   }
 }
