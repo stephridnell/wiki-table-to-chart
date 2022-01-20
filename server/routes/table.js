@@ -27,6 +27,9 @@ router.get('/', async (req, res) => {
   })
 })
 
+// ok so this method is very much array-method-ception and i have no doubt
+// it would be pretty slow on big datasets so this would be one of the first
+// areas i would direct my attention for cleaning up the code 
 const mapStructure = function (table) {
   // something funny happens if a table isn't formatted perfectly
   // e.g. some tables are like <table><caption></caption>...</table> and
