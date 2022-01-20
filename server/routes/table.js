@@ -9,6 +9,7 @@ router.get('/', async (req, res) => {
   // using xray instead of something like puppeteer to save time
   // i'm using the table.wikitable selector so i dont have to sort through irrelevent tables
   // there are also tables with the class 'toccolours' but i have chosen to ignore those
+  // because tabletojson has trouble with them
   // the '@html' returns the innerHTML of the whole table, without this xray will return the innerText by default
   xray(req.query.url, ['table.wikitable@html'])(function(err, tables) {
     if (err) {
